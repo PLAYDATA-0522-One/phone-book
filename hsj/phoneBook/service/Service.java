@@ -1,20 +1,24 @@
 package service;
 
-import controller.Controller;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 public class Service {
     private static Service instance;
     public Scanner sc = new Scanner(System.in);
     static private List<PhoneNumber> list = new ArrayList<>();
+    static private List<String> numberList = new ArrayList<>();
 
     public void insert(String number, String region, String name, String sex) {
+        if (numberList.contains(number)) {
+            System.out.println();
+            System.out.println("전화번호가 이미 존재합니다. 다시 입력해주세요.");
+        }
         PhoneNumber phoneNumber = new PhoneNumber(number, region, name, sex);
         list.add(phoneNumber);
+        numberList.add(phoneNumber.getNumber());
     }
 
     public void find(String number) {
@@ -30,6 +34,20 @@ public class Service {
 
     }
 
+    public void filter(String str) {
+        for (PhoneNumber phoneNumber : list) {
+            if (phoneNumber.getRegion().equals(str)) {
+                System.out.println(phoneNumber);
+            }
+            else if (phoneNumber.getName().equals(str)) {
+                System.out.println(phoneNumber);
+            }
+            else if (phoneNumber.getSex().equals(str)) {
+                System.out.println(phoneNumber);
+            }
+        }
+    }
+
     public void update(String number, String region, String name, String sex) {
         int count = 0;
         while (true) {
@@ -38,6 +56,7 @@ public class Service {
                 list.get(count).setRegion(region);
                 list.get(count).setName(name);
                 list.get(count).setSex(sex);
+
                 System.out.println(list.get(count));
                 break;
             } else {
@@ -62,22 +81,12 @@ public class Service {
     }
 
     public void findAll() {
-        System.out.println(list);
-    }
-
-    public void filter(String str) {
-        for (PhoneNumber phoneNumber : list) {
-            if (phoneNumber.getRegion().equals(str)) {
-                System.out.println(phoneNumber);
-            }
-            else if (phoneNumber.getName().equals(str)) {
-                System.out.println(phoneNumber);
-            }
-            else if (phoneNumber.getSex().equals(str)) {
-                System.out.println(phoneNumber);
-            }
+        for(PhoneNumber phoneNumber : list) {
+            System.out.println(phoneNumber);
         }
     }
+
+
     public static Service getInstance() {
         if (instance == null) instance = new Service();
         return instance;
@@ -128,11 +137,11 @@ class PhoneNumber {
 
     @Override
     public String toString() {
-        return "PhoneNumber{" +
-                "number=" + number +
-                ", region='" + region + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
+        return "{" +
+                "전화번호: " + number +
+                ", 지역: '" + region + '\'' +
+                ", 이름: '" + name + '\'' +
+                ", 성별: '" + sex + '\'' +
                 '}';
     }
 }

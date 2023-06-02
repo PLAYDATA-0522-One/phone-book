@@ -13,8 +13,16 @@ public class Controller {
         this.service = Service.getInstance();
     }
 
-    public void selectMode() {
-        System.out.println("1. 전화번호 정보 입력 2.전화번호 정보 찾기 3. 특정 정보가 포함된 정보 찾기 4. 전화번호 정보 업데이트 5.전화번호 정보 삭제 6. 전화번호부 출력");
+    public void selectMode() throws InterruptedException {
+        System.out.println();
+        System.out.println("===================== [전화번호부 프로그램] =====================");
+        System.out.println();
+        System.out.println("1. 전화번호 정보 입력  2.전화번호 정보 찾기  3. 특정 정보가 포함된 정보 찾기  \n" +
+                "4. 전화번호 정보 업데이트  5.전화번호 정보 삭제  6. 전화번호부 출력");
+        System.out.println();
+        System.out.println("===========================================================");
+        System.out.println();
+        System.out.println("번호 선택 >>");
         int mode;
         try {
             mode = Integer.parseInt(sc.nextLine());
@@ -32,7 +40,6 @@ public class Controller {
             System.out.println("새로운 성별 입력 >>");
             String sex = sc.nextLine();
             service.insert(number, region, name, sex);
-
         } else if (mode == 2) {
             // TODO : find 기능 만들 것
             System.out.println("찾을 전화번호 입력 >>");
@@ -50,6 +57,7 @@ public class Controller {
             String  number = sc.nextLine();
             System.out.println("수정할 지역 입력 >>");
             String region = sc.nextLine();
+
             System.out.println("수정할 이름 입력 >>");
             String name = sc.nextLine();
             System.out.println("수정할 성별 입력 >>");
@@ -65,7 +73,11 @@ public class Controller {
         else if (mode == 6) {
             service.findAll();
         }
+        Thread.sleep(2000);
     }
 
+    public void sleep() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
 }
